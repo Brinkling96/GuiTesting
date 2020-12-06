@@ -103,7 +103,7 @@ public class AddAccountDialong extends JDialog {
 
             }
             if(result){
-                this.account = new CheckingAccount(9091,balance);
+                this.account = new CheckingAccount(balance);
                 user.addCheckingAccount(account);
                 this.dispose();
             }

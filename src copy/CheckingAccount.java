@@ -1,9 +1,14 @@
 public class CheckingAccount {
+
+    private static int numAccounts = 0;
+
     private Integer accountID;
     private Integer balance;
 
-    public CheckingAccount(Integer accountID, Integer balance) {
-        this.accountID = accountID;
+
+    public CheckingAccount( Integer balance) {
+        this.accountID = numAccounts;
+        numAccounts++;
         this.balance = balance;
     }
 

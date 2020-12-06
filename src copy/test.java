@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class test extends JFrame {
     private JButton addAccountButton;
@@ -35,8 +36,15 @@ public class test extends JFrame {
 
         this.user = new BankUser("Sean", "Brady", 232);
 
-        user.addCheckingAccount(new CheckingAccount(1,200));
-        user.addCheckingAccount(new CheckingAccount(2,4523));
+        for(int i =0; i<100; i++) {
+            int balance = new Random().nextInt();
+            if(balance<0){
+                balance= balance *-1;
+
+            }
+            balance=balance%5000;
+            user.addCheckingAccount(new CheckingAccount(balance));
+        }
 
         ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
         {
@@ -63,7 +71,11 @@ public class test extends JFrame {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        this.WholeThing = new JPanel(new GridLayout(2,1,5,5));
+        setMinimumSize(new Dimension(600,400));
+
+        this.setLayout(new GridLayout(1,1));
+
+        this.WholeThing = new JPanel(new GridLayout(2,1,0,0));
         this.ButtonPanel = new JPanel();
         this.addAccountButton = new JButton("Add Account");
         this.removeAccountButton = new JButton("Remove Account");
@@ -71,12 +83,6 @@ public class test extends JFrame {
         this.withdrawButton = new JButton("Withdraw");
         this.scrollPane = new JScrollPane();
         this.table1 = new JTable();
-
-        ///hiii
-        ///dsaf
-
-
-
 
 
 
@@ -147,9 +153,42 @@ public class test extends JFrame {
         scrollPane.setViewportView(table1);
         if (table1.getColumnModel().getColumnCount() > 0) {
             for(int i = table1.getColumnModel().getColumnCount(); i== -1; i--){
+                table1.getColumnModel().getColumn(i).setMinWidth(25);
                 table1.getColumnModel().getColumn(i).setResizable(false);
             }
         }
+        GroupLayout contentPanelLayout = new GroupLayout(WholeThing);
+        WholeThing.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+                contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                .addComponent(addAccountButton)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(removeAccountButton)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(depositButton)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(withdrawButton)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())
+        );
+        contentPanelLayout.setVerticalGroup(
+                contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(addAccountButton)
+                                        .addComponent(removeAccountButton)
+                                        .addComponent(depositButton)
+                                        .addComponent(withdrawButton))
+                                .addGap(18, 18, 18)
+                                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
 
 
 
@@ -157,6 +196,23 @@ public class test extends JFrame {
         WholeThing.add(scrollPane);
 
         add(WholeThing);
+
+      GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(WholeThing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(WholeThing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
 
         pack();
         setResizable(true);
